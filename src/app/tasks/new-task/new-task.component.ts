@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { TasksService } from '../tasks.service';
 
 @Component({
   selector: 'app-new-task',
@@ -9,16 +10,17 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './new-task.component.css',
 })
 export class NewTaskComponent implements OnInit {
-  @Output() formData = new EventEmitter();
   @Output() cancelTask = new EventEmitter();
 
   @Input() userId = '';
+
+  constructor(private tasksService: TasksService) {}
 
   ngOnInit(): void {}
 
   onSubmit(ngform: NgForm) {
     const formValue = ngform.form.value;
-    const taskId = new Date().getTime();
+    const taskId = new Date().getTime().toString();
     const task = {
       id: taskId,
       userId: this.userId,
@@ -26,7 +28,8 @@ export class NewTaskComponent implements OnInit {
       summary: formValue.summary,
       dueDate: formValue.dueDate,
     };
-    this.formData.emit(task);
+    this.tasksService.addTask(task);
+    this.cancelTask.emit();
   }
 
   onCancelTask() {
