@@ -1,0 +1,55 @@
+<div class="backdrop" (click)="onCancelTask()"></div>
+<dialog open>
+  <h2>Add Task</h2>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <p>
+      <label for="title">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        ngModel
+        required
+        #title="ngModel"
+      />
+      @if (title.invalid && title.touched) {
+        <span class="error">Title can't be empty.</span>
+      }
+    </p>
+
+    <p>
+      <label for="summary">Summary</label>
+      <textarea
+        id="summary"
+        rows="5"
+        name="summary"
+        ngModel
+        required
+        #summary="ngModel"
+      ></textarea>
+      @if (summary.invalid && summary.touched) {
+        <span class="error">Summary can't be empty.</span>
+      }
+    </p>
+
+    <p>
+      <label for="dueDate">Due Date</label>
+      <input
+        type="date"
+        id="dueDate"
+        name="dueDate"
+        ngModel
+        required
+        #dueDate="ngModel"
+      />
+      @if (dueDate.invalid && dueDate.touched) {
+        <span class="error">Due date is invalid.</span>
+      }
+    </p>
+
+    <p class="actions">
+      <button type="button" (click)="onCancelTask()">Cancel</button>
+      <button type="submit" [disabled]="form.form.invalid">Create</button>
+    </p>
+  </form>
+</dialog>
