@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { TasksService } from '../tasks.service';
 
@@ -9,14 +9,12 @@ import { TasksService } from '../tasks.service';
   templateUrl: './new-task.component.html',
   styleUrl: './new-task.component.css',
 })
-export class NewTaskComponent implements OnInit {
+export class NewTaskComponent {
   @Output() cancelTask = new EventEmitter();
 
   @Input() userId = '';
 
   constructor(private tasksService: TasksService) {}
-
-  ngOnInit(): void {}
 
   onSubmit(ngform: NgForm) {
     const formValue = ngform.form.value;
